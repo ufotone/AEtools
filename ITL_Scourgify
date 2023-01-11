@@ -25,7 +25,7 @@ app.beginUndoGroup("ITL_Scourgify");
 };
 
 // MAIN
-alert(" 選択したコンポ以外を削除&リンク切れにします。");
+alert("選択コンポに関連するコンポ以外を削除&フッテージリンク切れにします");
 
 var ap=app.project;
 //ap.consolidateFootage();//<-フッテージの統合(プロジェクトから重複したフッテージアイテムすべてを削除する)
