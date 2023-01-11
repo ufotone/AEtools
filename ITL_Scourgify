@@ -1,0 +1,56 @@
+/*
+    整理の呪文　for CS  Tone Yushi.
+    選択したコンポ以外を削除&使っていたフッテージはプレースフォルダ化
+*/
+#target "AfterEffects"
+app.beginUndoGroup("ITL_Scourgify"); 
+
+ function ITL_ObliviateFootage(footage){ 
+            if(footage instanceof FootageItem){
+                var name = footage.name;
+                footage.comment = footage.name;
+                var namelimit=name.slice (0, 30); // 31byte CS5で直ってるの～！?
+                var width = footage.width;
+                var height = footage.height;
+                var frameRate = footage.frameRate;
+                if(frameRate<1){
+                    frameRate=30.0;
+                    }
+                var duration = footage.duration;
+                footage.replaceWithPlaceholder(namelimit, width, height, frameRate, duration);
+                return 0;
+                }else{
+                return 1;   
+         }
+};
+
+// MAIN
+alert(" 選択したコンポ以外を削除&リンク切れにします。");
+
+var ap=app.project;
+//ap.consolidateFootage();//<-フッテージの統合(プロジェクトから重複したフッテージアイテムすべてを削除する)
+
+for(var i=1;i<=ap.items.length;i++){
+    var target = ap.item(i);
+    ITL_ObliviateFootage(target);
+};
+
+var theItems = [];
+
+for(var i=1;i<=ap.items.length;i++){
+    var target = ap.item(i);
+    if((target instanceof CompItem )&&(target.selected==true)){
+        theItems[theItems.length] = target ;
+        }
+};
+
+if (theItems.length >0){
+    ap.reduceProject(theItems) ;
+    //ap.saveWithDialog();
+    };
+
+app.endUndoGroup();
+
+//alert(File.decode(ap.file));
+// ap.saveWithDialog()
+//ap.save();//save only
