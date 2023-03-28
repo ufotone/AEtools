@@ -1,0 +1,43 @@
+/*
+    選択したフッテージをプレースフォルダ化
+    Replace to Placeholder
+    by Tone Yushi
+*/
+
+#target "AfterEffects"
+app.beginUndoGroup("Replace-to-Placeholder"); 
+
+ function ITL_ObliviateFootage(footage){ 
+            if(footage instanceof FootageItem  && ! (footage.mainSource instanceof SolidSource)){
+                var name = footage.name;
+                footage.comment = footage.name;
+                var namelimit=name.slice (0, 30); // 31byte
+                var width = footage.width;
+                var height = footage.height;
+                var frameRate = footage.frameRate;
+                if(frameRate<1){
+                    frameRate=30.0;
+                    }
+                var duration = footage.duration;
+                footage.replaceWithPlaceholder(namelimit, width, height, frameRate, duration);
+		footage.name = name;
+                return 0;
+                }else{
+                return 1;   
+         }
+};
+
+// MAIN
+
+
+var ap=app.project;
+
+for(var i=1;i<=ap.items.length;i++){
+    var target = ap.item(i);
+    if((target instanceof FootageItem )&&(target.selected==true)){
+            ITL_ObliviateFootage(target);
+        }
+};
+
+
+app.endUndoGroup();
