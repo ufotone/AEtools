@@ -31,6 +31,7 @@
 (function () {
     // 収集後の .aep を渡して容量削減するツールがある場所（パス）をここで指定する！
     var CLEANER_PATH = "C:\\CPPl_cleaner.exe";
+    // https://note.com/ganchan_ganchan/n/n30e451279941   <-ここで配布されてる
 
     // 収集先のフォルダ名の末尾に付ける文字列（英語表記）
     var FOLDER_SUFFIX = " Folder";
